@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Time Tracker Project Testing</title>
+
+    <link href="dist/examples.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?sensor=false"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <style type="text/css">
+      .main {
+        text-align: center;
+      }
+      .values {
+        font-size: 36px;
+        color: teal;
+        height: 180px;
+        line-height: 130px;
+        padding: 20px;
+      }
+      #wrong{
+        color: red;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
+    <script type="text/javascript">
+      var myLat;
+      var myLon;
+      var myState
+      $.ajax({
+        url: "https://geolocation-db.com/jsonp",
+        jsonpCallback: "callback",
+        dataType: "jsonp",
+        success: function (location) {
+          $("#country").html(location.country_name);
+          myState = location.state
+          $("#state").html(location.state);
+          $("#city").html(location.city);
+          // myLat = location.latitude
+          $("#latitude").html(location.latitude);
+          // myLon = location.longitude
+          $("#longitude").html(location.longitude);
+          $("#ip").html(location.IPv4);
+
+        },
+      });
+      $(document).ready(function () {
+        
+        var objToday = new Date(),
+          weekday = new Array(
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ),
+          dayOfWeek = weekday[objToday.getDay()],
+          domEnder = (function () {
+            var a = objToday;
+            if (/1/.test(parseInt((a + "").charAt(0)))) return "th";
+            a = parseInt((a + "").charAt(1));
+            return 1 == a ? "st" : 2 == a ? "nd" : 3 == a ? "rd" : "th";
+          })(),
+          dayOfMonth =
+            today + (objToday.getDate() < 10)
+              ? "0" + objToday.getDate() + domEnder
+              : objToday.getDate() + domEnder,
+          months = new Array(
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+          ),
+          curMonth = months[objToday.getMonth()],
+          curYear = objToday.getFullYear(),
+          curHour =
+            objToday.getHours() > 12
+              ? objToday.getHours() - 12
+              : objToday.getHours() < 10
+              ? "0" + objToday.getHours()
+              : objToday.getHours(),
+          curMinute =
+            objToday.getMinutes() < 10
+              ? "0" + objToday.getMinutes()
+              : objToday.getMinutes(),
+          curSeconds =
+            objToday.getSeconds() < 10
+              ? "0" + objToday.getSeconds()
+              : objToday.getSeconds(),
+          curMeridiem = objToday.getHours() > 12 ? "PM" : "AM";
+        var today =
+          curHour +
+          ":" +
+          curMinute +
+          "." +
+          curSeconds +
+          curMeridiem +
+          " | " +
+          dayOfWeek +
+          " | " +
+          dayOfMonth +
+          " of " +
+          curMonth +
+          ", " +
+          curYear;
+
+        document.getElementsByTagName("h1")[0].textContent = today;
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="main">
+      ===============================================================
+      <br/> <br/> 
+      User Name: Abhay Singh<br/> 
+      Referrer: B Kumar (8*******17)<br/>
+      Code: 977565422766868<br/> 
+      Allotted Zone:  West district in the Union Territory of Delhi<br/>
+      Country:	 India<br/>
+      State:	Delhi<br/>
+      District:	West<br/>
+      <br/> <br/>     
+      ===============================================================
+      <div>Country: <span id="country"></span></div>
+      <div>State: <span id="state"></span></div>
+      <div>City: <span id="city"></span></div>
+      <div>Latitude: <span id="latitude"></span></div>
+      <div>Longitude: <span id="longitude"></span></div>
+      <div>IP: <span id="ip"></span></div>
+      =================================================================
+      <h1></h1>
+      <div id="chronoExample">
+        <div class="values">00:00:00</div>
+        <div>
+          <button class="startButton btn btn-success btn-lg mb-1">Start</button>
+          <button class="pauseButton btn btn-primary btn-lg mb-1">Pause</button>
+          <button class="stopButton btn btn-danger btn-lg mb-1">Stop</button>
+          <button class="resetButton btn btn-warning btn-lg mb-1">Reset</button>
+        </div>
+      </div>
+      =============================================================================
+    </div>
+
+    <script src="dist/examples.min.js"></script>
+  </body>
+</html>
